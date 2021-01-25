@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "ComponenteA",
   components:{
@@ -33,7 +34,8 @@ export default {
     this.clasifica(this.usuario.edad);
   },
   mounted() {
-
+    this.obtenerDatos();
+    this.obtenerMasDatos();
   },
   methods:{
     /**
@@ -49,6 +51,23 @@ export default {
           this.clasificacion = "Ya estas viejo";
           break;
       }
+    },
+    obtenerDatos(){
+      axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+          .then((result) => {
+            console.log(result.data);
+          });
+    },
+    obtenerMasDatos(){
+      this.$http.get("https://picsum.photos/v2/list")
+          .then(response => {
+            if (response.data){
+              let resultado = response.data;
+              console.log(resultado);
+            }
+          }).catch(error => {
+        console.log(error);
+      });
     }
   }
 }
